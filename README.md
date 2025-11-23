@@ -100,9 +100,9 @@ Accuracy and Speed: Ensuring that the closest available responder is notified im
 
 <h2 id="tech-stack"> 📦 Tech Stack </h2>
 
-| Hardware | Firebase | Node.js, Python | Twilio API | React.js | Google Maps API |
+| Hardware | Firebase | Node.js, Python | Notification Service API | React.js | Google Maps API |
 |-------|----------|-----------------|------------|----------|-----------------|
-| ESP32 DevKit C(C++), OLED Display, Solar Panel, Rechargeable Battery, Panic Button, Addressable LED Ring, Buzzer, LoRa Module  | Cloud backend, DB, Functions | Backend, ML verification | SMS/Call notifications | Web dashboard | Geofencing & Visualization |
+| ESP32 DevKit C(C++), OLED Display, Solar Panel, Rechargeable Battery, Panic Button, Addressable LED Ring, Buzzer, LoRa Module  | Cloud backend, DB, Functions | Backend, ML verification | Real-Time Dispatch Notifications (SMS, Call, Push) | Web dashboard | Geofencing & Visualization |
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
