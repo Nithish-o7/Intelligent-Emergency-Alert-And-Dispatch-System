@@ -1,6 +1,4 @@
-Here is a visually enhanced, emoji-friendly version you can drop into `CODE_OF_CONDUCT.md` or your README section.
 
-***
 
 # 🤝 Code of Conduct
 
