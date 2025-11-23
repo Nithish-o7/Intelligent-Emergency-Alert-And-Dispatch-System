@@ -1,47 +1,97 @@
-Code of Conduct
+Here is a visually enhanced, emoji-friendly version you can drop into `CODE_OF_CONDUCT.md` or your README section.
 
-Our Pledge
+***
 
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to make participation in our project and our community a harassment-free and inclusive experience for everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
+# 🤝 Code of Conduct
 
-Our Standards
+## 🌍 Our Pledge
+
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to make participation in our project and community a **harassment‑free, inclusive, and respectful experience for everyone**.  
+
+This applies to everyone in our community, and discrimination or exclusion of any kind is not tolerated.
+
+***
+
+## ✅ Our Standards
+
+### 💡 Positive behavior
 
 Examples of behavior that contributes to a positive environment include:
 
-Using welcoming and inclusive language.
+- 💬 Using welcoming and inclusive language.  
+- 🤝 Being respectful of differing viewpoints and experiences.  
+- 🧠 Gracefully accepting constructive criticism.  
+- 🎯 Focusing on what is best for the community and the **public safety mission** of this project.  
+- 💚 Showing empathy and support towards other community members.  
 
-Being respectful of differing viewpoints and experiences.
+You are encouraged to:
 
-Gracefully accepting constructive criticism.
+- Ask questions early instead of staying blocked.  
+- Offer help to new contributors and first‑time issue reporters.  
+- Prioritize user and responder safety when making technical trade‑offs.
 
-Focusing on what is best for the community and the public safety mission of this project.
-
-Showing empathy towards other community members.
+### 🚫 Unacceptable behavior
 
 Examples of unacceptable behavior by participants include:
 
-The use of sexualized language or imagery and unwelcome sexual attention or advances.
+- 🍑 The use of sexualized language or imagery, and unwelcome sexual attention or advances.  
+- 🧨 Trolling, insulting/derogatory comments, and personal or political attacks.  
+- 🚫 Public or private harassment in any form.  
+- 🔓 Publishing others' private information (such as a physical or electronic address) without explicit permission.  
+- ⚠️ Any other conduct which could reasonably be considered inappropriate in a professional or emergency‑response setting.  
 
-Trolling, insulting/derogatory comments, and personal or political attacks.
+***
 
-Public or private harassment.
+## 🧭 Our Responsibilities
 
-Publishing others' private information, such as a physical or electronic address, without explicit permission.
+Project maintainers are responsible for **clarifying standards of acceptable behavior** and are expected to take **fair, consistent, and timely action** in response to any instances of unacceptable behavior.
 
-Other conduct which could reasonably be considered inappropriate in a professional setting.
+Maintainers have the right and responsibility to:
 
-Our Responsibilities
+- ✂️ Remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned with this Code of Conduct.  
+- 🚷 Temporarily or permanently ban any contributor for behavior that is inappropriate, threatening, offensive, or harmful.  
 
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+For public safety–related work, decisions may prioritize **risk reduction and community trust** over individual participation when necessary.
 
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned with this Code of Conduct, or to temporarily or permanently ban any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+***
 
-Scope
+## 🌐 Scope
 
-This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event.
+This Code of Conduct applies:
 
-Enforcement
+- 📦 Within all project spaces (repositories, issues, pull requests, discussions, documentation, chats, and community calls).  
+- 🏛️ In public spaces when an individual is representing the project or its community.  
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project admin at nithisshhpersonal@gmail.com . All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
+Examples of representing the project include:
 
-This Code of Conduct is adapted from the Contributor Covenant, version 1.4, available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+- Using an official project email address.  
+- Posting via an official social media or organization account.  
+- Speaking as an appointed representative at online or offline events, meetups, demos, or hackathons.  
+
+If your words or actions could reasonably be perceived as speaking “for the project,” this Code of Conduct applies.
+
+***
+
+## 🚨 Enforcement
+
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project admin at:
+
+📩 **nithisshhpersonal@gmail.com**
+
+All complaints will:
+
+- 🕵️ Be reviewed and investigated.  
+- 🧩 Result in a response deemed necessary and appropriate to the circumstances.  
+- 🔐 Be handled with respect for the privacy and confidentiality of the reporter whenever possible.  
+
+Further details of specific enforcement policies (e.g., warning levels, temporary restrictions, or permanent bans) may be documented separately and updated over time as the community grows.
+
+***
+
+## 📚 Attribution
+
+This Code of Conduct is adapted from the **Contributor Covenant**, version 1.4, available at:  
+https://www.contributor-covenant.org/version/1/4/code-of-conduct.html  
+
+For more information on community best practices and updates to the covenant, please refer to the official Contributor Covenant website.
+
