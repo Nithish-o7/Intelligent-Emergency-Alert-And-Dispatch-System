@@ -1,0 +1,100 @@
+// This code is for an ESP32.
+#include <WiFi.h>
+#include <Firebase_ESP_Client.h>
+
+// Helper libraries from the Firebase ESP Client
+#include "addons/TokenHelper.h"
+#include "addons/RTDBHelper.h"
+
+// =========================================================================================
+// == 1. YOUR WI-FI CREDENTIALS
+// =========================================================================================
+#define WIFI_SSID "  "
+#define WIFI_PASSWORD " "
+
+// =========================================================================================
+// == 2. YOUR FIREBASE PROJECT CREDENTIALS
+// =========================================================================================
+#define API_KEY " "
+#define DATABASE_URL " "
+
+// Define Firebase global objects
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
+
+// A variable to hold the counter we will send to Firebase
+int counter = 0;
+
+void setup() {
+  Serial.begin(115200);
+  Serial.println("\nFirebase ESP32 Sender");
+
+  // --- Wi-Fi Connection with Error Checking ---
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD); 
+  Serial.print("Attempting to connect to Wi-Fi network: ");
+  Serial.println(WIFI_SSID);
+
+  // Wait for 10 seconds for Wi-Fi to connect
+  int wifi_retries = 0;
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+    wifi_retries++;
+    if (wifi_retries > 20) { // Timeout after 10 seconds
+        Serial.println("\n\n>>> Wi-Fi Connection FAILED. <<<\nPlease check your WIFI_SSID and WIFI_PASSWORD.");
+        while(true); // Halt the program indefinitely
+    }
+  }
+  
+  // Connection successful, print IP address
+  Serial.println("\nWi-Fi Connected!");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
+
+  // --- Firebase Configuration ---
+  config.api_key = API_KEY;
+  config.database_url = DATABASE_URL;
+
+  // This is required for the library to generate a user token for authentication
+  if (Firebase.signUp(&config, &auth, "", "")) {
+    Serial.println("-> SUCCESS: Firebase anonymous sign-up completed.");
+    config.token_status_callback = tokenStatusCallback; // Located in addons/TokenHelper.h
+  } else {
+    Serial.println("\n\n>>> FIREBASE AUTHENTICATION FAILED. <<<\nThis is likely due to an incorrect API_KEY or DATABASE_URL.");
+    Serial.printf("Error Message: %s\n", config.signer.signupError.message.c_str());
+    Serial.println("Please double-check your credentials and restart the ESP32.");
+    while(true); // Halt the program indefinitely
+  }
+
+  Firebase.begin(&config, &auth);
+  Firebase.reconnectWiFi(true);
+}
+
+void loop() {
+  // We only run the code if the Firebase connection is active
+  if (Firebase.ready()) {
+    
+    // Define the path in your database where the data will be stored.
+    // This MUST match the path in your dashboard's JavaScript code ('test/int').
+    String databasePath = "/test/int"; 
+    
+    Serial.printf("Sending value to Firebase: %d\n", counter);
+
+    // Send the integer value of 'counter' to the specified path
+    if (Firebase.RTDB.setInt(&fbdo, databasePath, counter)) {
+      Serial.println("-> SUCCESS: Data sent to Firebase.");
+    } else {
+      Serial.println("-> FAILED to send data.");
+      Serial.println("REASON: " + fbdo.errorReason());
+    }
+
+    counter++; // Increment the counter for the next loop
+    
+  } else {
+    Serial.println("Firebase is not ready. Check connection.");
+  }
+  
+  delay(5000); // Wait for 5 seconds before the next loop
+}

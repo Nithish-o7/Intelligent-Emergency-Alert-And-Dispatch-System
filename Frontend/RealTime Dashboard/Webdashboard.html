@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Emergency Alert Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for a clean, modern look -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1599494220791-34e8b3687e02?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 0;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #B91C1C 0%, #7F1D1D 100%);
+        }
+        .card-bg {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+        .alert-item {
+            animation: fadeIn 0.5s ease-in-out;
+            transition: all 0.3s ease;
+        }
+        .alert-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #alert-panel {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateX(100%);
+        }
+        #alert-panel.open {
+            transform: translateX(0);
+        }
+        .notification-dot {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .heartbeat {
+            animation: heartbeat 1s infinite;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8">
+
+    <div class="content-wrapper w-full max-w-7xl mx-auto">
+        <div class="bg-white/95 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-sm border border-gray-200">
+            
+            <div class="header-bg p-6 md:p-8 text-white flex items-center justify-between gap-4 flex-wrap">
+                <div class="flex items-center space-x-4">
+                    <!-- Indian Police emblem as SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="h-16 w-16 text-white">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="currentColor" stroke="none"/>
+                        <polygon points="12 5 13.6 8.5 17.5 9.1 14.8 11.8 15.4 15.7 12 14 8.6 15.7 9.2 11.8 6.5 9.1 10.4 8.5" fill="#EAB308" stroke="none"/>
+                    </svg>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold tracking-wider">Intelligent Emergency Alert Dispatch System</h1>
+                        <p class="text-gray-200 mt-1 text-sm md:text-base">Indian Police - National Command & Control Center</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div id="status-indicator" class="w-4 h-4 rounded-full transition-colors duration-500 animate-pulse bg-red-500"></div>
+                    <span id="status-text" class="text-gray-200 font-medium">Connecting...</span>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-8">
+                <!-- PANIC ALERTS section -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold text-red-700 border-b-2 border-red-300 pb-2 flex items-center gap-2">
+                        <i data-lucide="bell-ring" class="w-6 h-6 text-red-600 heartbeat"></i>
+                        PANIC ALERTS
+                    </h2>
+                    <div id="alert-summary-card" class="mt-4 card-bg p-6 rounded-2xl border border-gray-200 shadow-xl hover:shadow-2xl hover:border-red-500 transition-all duration-300 cursor-pointer flex justify-between items-center relative overflow-hidden">
+                        <div class="flex-grow">
+                            <p id="latest-alert-text" class="font-bold text-xl md:text-2xl text-red-800">Waiting for alerts...</p>
+                            <p id="latest-alert-time" class="text-sm md:text-base text-gray-600 mt-2">--:--:--</p>
+                        </div>
+                        <div class="flex items-center space-x-3 ml-4">
+                            <span id="notification-dot" class="w-4 h-4 bg-red-600 rounded-full hidden notification-dot"></span>
+                            <span class="text-gray-700 font-semibold hidden md:block">View All</span>
+                            <i data-lucide="chevron-right" class="w-8 h-8 text-gray-700"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SENSOR & STATUS DATA section -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold text-gray-700 border-b-2 border-gray-300 pb-2 flex items-center gap-2">
+                        <i data-lucide="bar-chart-2" class="w-6 h-6 text-gray-600"></i>
+                        Sensor & Status Data
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                        <div class="card-bg p-6 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center shadow-md">
+                            <i data-lucide="cpu" class="w-12 h-12 text-blue-600 mb-2"></i>
+                            <h3 class="text-lg font-semibold text-gray-600">Device ID</h3>
+                            <p id="device-id" class="text-3xl font-bold text-gray-800 my-4">---</p>
+                            <p class="text-sm text-gray-500">Asset Identifier</p>
+                        </div>
+                        <div class="card-bg p-6 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center shadow-md">
+                            <i data-lucide="signal" class="w-12 h-12 text-blue-600 mb-2"></i>
+                            <h3 class="text-lg font-semibold text-gray-600">Beacon Signal Count</h3>
+                            <p id="counter-value" class="text-5xl font-bold text-blue-600 my-4 transition-transform duration-300 ease-in-out">0</p>
+                            <p class="text-sm text-gray-500">Total alerts received</p>
+                        </div>
+                        <div class="card-bg p-6 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center shadow-md">
+                            <i data-lucide="clock" class="w-12 h-12 text-blue-600 mb-2"></i>
+                            <h3 class="text-lg font-semibold text-gray-600">Last Signal Received</h3>
+                            <p id="last-update" class="text-2xl md:text-3xl font-bold text-green-600 my-4">Never</p>
+                            <p class="text-sm text-gray-500">Timestamp of last data receipt</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE LOCATION TRACKING section -->
+                <div>
+                    <h2 class="text-xl font-bold text-gray-700 border-b-2 border-gray-300 pb-2 flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-gray-600"></i>
+                        Live Location Tracking
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                        <div class="card-bg p-6 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center shadow-md">
+                            <i data-lucide="compass" class="w-12 h-12 text-yellow-600 mb-2"></i>
+                            <h3 class="text-lg font-semibold text-gray-600">Latitude</h3>
+                            <p id="latitude-value" class="text-2xl font-bold text-gray-800 my-2">---</p>
+                        </div>
+                        <div class="card-bg p-6 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center shadow-md">
+                            <i data-lucide="compass" class="w-12 h-12 text-yellow-600 mb-2 rotate-90"></i>
+                            <h3 class="text-lg font-semibold text-gray-600">Longitude</h3>
+                            <p id="longitude-value" class="text-2xl font-bold text-gray-800 my-2">---</p>
+                        </div>
+                        <div class="card-bg p-6 rounded-2xl border border-gray-200 flex flex-col items-center justify-center text-center shadow-md">
+                            <i data-lucide="map" class="w-12 h-12 text-yellow-600 mb-2"></i>
+                            <h3 class="text-lg font-semibold text-gray-600">Exact Location</h3>
+                            <p id="location-address" class="text-lg font-bold text-gray-800 my-2 px-2 leading-snug">---</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <a id="map-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-red-700 text-white font-bold py-3 px-8 rounded-full hover:bg-red-800 transition-all duration-300 shadow-lg">
+                            <i data-lucide="globe" class="w-5 h-5"></i>
+                            View on Map
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Panel (Side-out) -->
+    <div id="alert-panel" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 p-6 flex flex-col rounded-l-3xl">
+        <div class="flex justify-between items-center border-b pb-4">
+            <h2 class="text-2xl font-bold text-red-700">Recent Panic Alerts</h2>
+            <button id="close-panel-btn" class="text-gray-500 hover:text-gray-800 p-2 rounded-full hover:bg-gray-100 transition-colors">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+        <ul id="panic-alert-list" class="space-y-4 mt-4 overflow-y-auto flex-grow">
+            <li class="text-gray-500">Waiting for alerts...</li>
+        </ul>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        
+        // Log all Firebase debug messages
+        console.log("Setting Firebase log level to debug...");
+        // This is a placeholder for the actual setLogLevel function which isn't available via CDN
+        // import { setLogLevel } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        // setLogLevel('debug');
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXZfxOxeR3QnFuybzTKTYnKmqKH5vUGDo",
+            authDomain: "project-gaurdian.firebaseapp.com",
+            databaseURL: "https://project-gaurdian-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "project-gaurdian",
+            storageBucket: "project-gaurdian.appspot.com",
+            messagingSenderId: "19521998064",
+            appId: "1:19521998064:web:ad0e885ee58bddb6134635"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // --- UI ELEMENT REFERENCES ---
+        const statusIndicator = document.getElementById('status-indicator');
+        const statusText = document.getElementById('status-text');
+        const deviceIdElement = document.getElementById('device-id');
+        const counterElement = document.getElementById('counter-value');
+        const lastUpdateElement = document.getElementById('last-update');
+        const latitudeElement = document.getElementById('latitude-value');
+        const longitudeElement = document.getElementById('longitude-value');
+        const locationAddressElement = document.getElementById('location-address');
+        const mapLinkElement = document.getElementById('map-link');
+
+        const alertSummaryCard = document.getElementById('alert-summary-card');
+        const latestAlertText = document.getElementById('latest-alert-text');
+        const latestAlertTime = document.getElementById('latest-alert-time');
+        const notificationDot = document.getElementById('notification-dot');
+        const alertPanel = document.getElementById('alert-panel');
+        const closePanelBtn = document.getElementById('close-panel-btn');
+        const panicAlertList = document.getElementById('panic-alert-list');
+
+        // --- PANEL LOGIC ---
+        alertSummaryCard.addEventListener('click', () => {
+            alertPanel.classList.add('open');
+            notificationDot.classList.add('hidden');
+            notificationDot.classList.remove('notification-dot');
+        });
+
+        closePanelBtn.addEventListener('click', () => {
+            alertPanel.classList.remove('open');
+        });
+
+        // --- HELPER FUNCTIONS ---
+        const updateConnectionStatus = (connected, error = false) => {
+            if (connected) {
+                statusIndicator.classList.remove('bg-red-500', 'animate-pulse');
+                statusIndicator.classList.add('bg-green-500');
+                statusText.textContent = 'Connected';
+            } else {
+                statusIndicator.classList.remove('bg-green-500');
+                statusIndicator.classList.add('bg-red-500', 'animate-pulse');
+                statusText.textContent = error ? 'Error' : 'Connecting...';
+            }
+        };
+
+        const getAddressFromCoordinates = async (lat, lng) => {
+            try {
+                locationAddressElement.textContent = 'Fetching...';
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+                if (!response.ok) { throw new Error('Network response was not ok'); }
+                const data = await response.json();
+                locationAddressElement.textContent = data?.display_name || 'Address not found';
+            } catch (error) {
+                console.error("Could not fetch address: ", error);
+                locationAddressElement.textContent = 'Could not fetch address';
+            }
+        };
+
+        // --- FIREBASE LISTENERS ---
+
+        // LISTENER 1: Display Recent Panic Alerts & Update Summary
+        const panicAlertsRef = query(ref(database, 'panic_alerts'), orderByChild('timestamp'), limitToLast(5));
+        onValue(panicAlertsRef, (snapshot) => {
+            updateConnectionStatus(true);
+            panicAlertList.innerHTML = '';
+            
+            if (snapshot.exists()) {
+                let latestKey = null;
+                let latestData = null;
+                const alerts = [];
+                
+                snapshot.forEach((childSnapshot) => {
+                    alerts.push({ key: childSnapshot.key, val: childSnapshot.val() });
+                });
+
+                // Reverse alerts to process newest first
+                alerts.reverse();
+
+                // Set summary card with the newest alert (the first one after reversing)
+                if (alerts.length > 0) {
+                    latestData = alerts[0].val;
+                    latestKey = alerts[0].key;
+                    latestAlertText.textContent = latestData.message || 'Alert Received';
+                    latestAlertTime.textContent = `Received at ${new Date(parseInt(latestKey)).toLocaleTimeString()}`;
+                }
+
+                // Populate the side panel list
+                alerts.forEach(alert => {
+                    const alertData = alert.val;
+                    const alertTimestamp = new Date(parseInt(alert.key)).toLocaleString();
+                    const message = alertData.message || 'Alert Received';
+                    const deviceId = alertData.deviceId || 'Unknown Device';
+
+                    const listItem = document.createElement('li');
+                    listItem.className = 'alert-item p-4 bg-gray-50 border-l-4 border-red-500 rounded-lg shadow-sm';
+                    if (alert.key === latestKey) {
+                        listItem.classList.add('border-red-700', 'shadow-lg');
+                        listItem.innerHTML = `
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="font-bold text-red-700 text-lg">${message}</p>
+                                <span class="text-xs font-semibold text-red-600 bg-red-100 px-2 py-1 rounded-full animate-pulse">NEW</span>
+                            </div>
+                            <p class="text-sm text-gray-800">Device: <span class="font-semibold">${deviceId}</span></p>
+                            <p class="text-xs text-gray-500 mt-1">${alertTimestamp}</p>
+                        `;
+                    } else {
+                        listItem.innerHTML = `
+                            <p class="font-bold text-red-700">${message}</p>
+                            <p class="text-sm text-gray-800">Device: <span class="font-semibold">${deviceId}</span></p>
+                            <p class="text-xs text-gray-500 mt-1">${alertTimestamp}</p>
+                        `;
+                    }
+                    panicAlertList.appendChild(listItem);
+                });
+
+                // Show notification dot if panel is not open
+                if (!alertPanel.classList.contains('open')) {
+                    notificationDot.classList.remove('hidden');
+                    notificationDot.classList.add('notification-dot');
+                }
+
+            } else {
+                panicAlertList.innerHTML = '<li class="text-gray-500">No alerts yet.</li>';
+                latestAlertText.textContent = 'No alerts yet.';
+                latestAlertTime.textContent = '--:--:--';
+            }
+            lucide.createIcons();
+        }, (error) => {
+            console.error("Firebase read failed for panic alerts: ", error);
+            updateConnectionStatus(false, true);
+        });
+
+        // LISTENER 2: Get Total Alert Count
+        const totalAlertsRef = ref(database, 'panic_alerts');
+        onValue(totalAlertsRef, (snapshot) => {
+            if (snapshot.exists()) {
+                counterElement.textContent = snapshot.size;
+                lastUpdateElement.textContent = new Date().toLocaleTimeString();
+            } else {
+                counterElement.textContent = 0;
+            }
+            lucide.createIcons();
+        }, (error) => {
+            console.error("Firebase read failed for total alerts count: ", error);
+            counterElement.textContent = 'Error';
+        });
+
+        // LISTENER 3: Device Info
+        const deviceInfoRef = ref(database, 'device/info');
+        onValue(deviceInfoRef, (snapshot) => {
+            const data = snapshot.val();
+            deviceIdElement.textContent = (data && data.id) ? data.id : 'N/A';
+            lucide.createIcons();
+        }, (error) => {
+            deviceIdElement.textContent = 'Error';
+        });
+
+        // LISTENER 4: Location Data
+        const locationDataRef = ref(database, 'location/live');
+        onValue(locationDataRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.lat !== undefined && data.lng !== undefined) {
+                const lat = parseFloat(data.lat);
+                const lng = parseFloat(data.lng);
+                latitudeElement.textContent = lat.toFixed(6);
+                longitudeElement.textContent = lng.toFixed(6);
+                getAddressFromCoordinates(lat, lng);
+                mapLinkElement.href = `https://www.google.com/maps?q=${lat},${lng}`;
+            } else {
+                latitudeElement.textContent = 'N/A';
+                longitudeElement.textContent = 'N/A';
+                locationAddressElement.textContent = 'Waiting for data...';
+            }
+            lucide.createIcons();
+        }, (error) => {
+            updateConnectionStatus(false, true);
+        });
+
+    </script>
+</body>
+</html>

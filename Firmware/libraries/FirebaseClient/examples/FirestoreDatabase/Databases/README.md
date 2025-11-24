@@ -1,0 +1,16 @@
+## examples/FirestoreDatabase/Databases
+
+* [FirestoreDatabase](/examples/FirestoreDatabase/)
+    * [Databases](/examples/FirestoreDatabase/Databases/)
+        * [Create](/examples/FirestoreDatabase/Databases/Create/)
+        * [Delete](/examples/FirestoreDatabase/Databases/Delete/)
+        * [ExportDocuments](/examples/FirestoreDatabase/Databases/ExportDocuments/)
+        * [Get](/examples/FirestoreDatabase/Databases/Get/)
+        * [ImportDocuments](/examples/FirestoreDatabase/Databases/ImportDocuments/)
+        * [Indexes](/examples/FirestoreDatabase/Databases/Indexes/)
+            * [Create](/examples/FirestoreDatabase/Databases/Indexes/Create/)
+            * [Delete](/examples/FirestoreDatabase/Databases/Indexes/Delete/)
+            * [Get](/examples/FirestoreDatabase/Databases/Indexes/Get/)
+            * [List](/examples/FirestoreDatabase/Databases/Indexes/List/)
+        * [List](/examples/FirestoreDatabase/Databases/List/)
+        * [Update](/examples/FirestoreDatabase/Databases/Update/)

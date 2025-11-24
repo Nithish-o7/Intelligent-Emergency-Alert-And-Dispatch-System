@@ -1,0 +1,33 @@
+#include <HardwareSerial.h>
+
+// Use UART1 for GSM
+HardwareSerial gsmSerial(1);
+
+// Define GSM pins
+#define GSM_RX 26  // ESP32 receives from GSM TX
+#define GSM_TX 27  // ESP32 sends to GSM RX (use voltage divider!)
+
+void setup() {
+  Serial.begin(115200); // USB Serial Monitor
+  gsmSerial.begin(9600, SERIAL_8N1, GSM_RX, GSM_TX); // GSM Serial
+
+  Serial.println("GSM Test Started...");
+  delay(1000);
+
+  // Send basic AT command
+  gsmSerial.println("AT");
+}
+
+void loop() {
+  // Echo GSM responses to Serial Monitor
+  while (gsmSerial.available()) {
+    Serial.write(gsmSerial.read());
+  }
+
+  // Send AT command every 5 seconds
+  static unsigned long lastSend = 0;
+  if (millis() - lastSend > 5000) {
+    gsmSerial.println("AT");
+    lastSend = millis();
+  }
+}

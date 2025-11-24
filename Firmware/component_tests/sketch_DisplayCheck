@@ -1,0 +1,37 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width in pixels
+#define SCREEN_HEIGHT 64 // OLED display height in pixels
+#define OLED_RESET     -1 // Reset pin (or -1 if sharing Arduino reset pin)
+#define SCREEN_ADDRESS 0x3C // I2C address for most OLED displays
+
+// Create the OLED display object
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+void setup() {
+  Serial.begin(115200);
+
+  // Initialize OLED
+  if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); // Stay here if failed
+  }
+
+  delay(2000);
+  display.clearDisplay();
+
+  // Display splash screen
+  display.setTextSize(2);      // Large text
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 20);   // x=10, y=20
+  display.println("OLED Test");
+  display.display();
+
+  Serial.println("OLED is working if you see the message");
+}
+
+void loop() {
+  // Nothing in loop for this test
+}
