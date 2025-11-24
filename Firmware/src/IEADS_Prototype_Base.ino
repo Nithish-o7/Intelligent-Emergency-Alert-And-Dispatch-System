@@ -8,8 +8,8 @@
 #include <Adafruit_SSD1306.h>
 
 // --- Replace with your WiFi credentials ---
-#define WIFI_SSID "ANBU"
-#define WIFI_PASSWORD "9361406761"
+#define WIFI_SSID " "
+#define WIFI_PASSWORD " "
 
 // --- Firebase Project Configuration ---
 #define API_KEY "AIzaSyCXZfxOxeR3QnFuybzTKTYnKmqKH5vUGDo"
