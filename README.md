@@ -129,42 +129,41 @@ See docs/roadmap.md for detailed info and to suggest improvements!
 <p>The IEADS repository is organized into five primary layers: Firmware, Backend, Frontend, Hardware, and Documentation to ensure modularity and scalability.</p>
 
 <pre>
-├── .github/
-│   ├── ISSUE_TEMPLATE/
-│   └── PULL_REQUEST_TEMPLATE
-|
-├── Backend/
-│   ├── ai-verification/
-│   ├── dispatch-service/
-│   └── database/
-|
-├── Docs/                          # Comprehensive documentation and guides
-│   ├── Architecture.md            # Detailed system flow and component interaction diagram
-│   ├── setup-guide.md             # Step-by-step instructions for installing dependencies and setup
-│   └── Reference_Paper.pdf        # Foundational research paper for the project
-|
-├── Firmware/                      # Embedded C++ code for the Intelligent Node (ESP32)
-│   └── IEADS_ESP32_Code/
-│       ├── IEADS_main.ino
-│       └── src/
-│           ├── CommsManager.* # Logic for LoRaWAN/Wi-Fi failover
-│           └── Hardware/          # Pin definitions and hardware configuration
-|
-├── Frontend/                      # Real-time Operations Dashboard (Web UI for officials)
-│   ├── src/
-│   │   ├── components/            # Reusable UI elements (MapDisplay, AlertFeed)
-│   │   ├── pages/                 # Main application views (Dashboard)
-│   │   └── services/              # API and WebSocket connectivity logic
-|
-├── Hardware/                      # Physical hardware documentation
-│   ├── Schematics/                # Wiring diagrams and PCB layouts
-│   └── BOM.md                     # Bill of Materials (List of components required)
-|
-├── .env.example
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── LICENSE
-└── README.md
+├── .gitignore                      # Files and folders to ignore in Git
+├── .env.example                    # Template for required environment variables (DB, API Keys, etc.)
+├── CONTRIBUTING.md                 # Internal Development Guide and Code Workflow
+├── CODE_OF_CONDUCT.md              # Team Behavior Policy
+├── README.md                       # High-level project description and Tech Stack
+│
+├── firmware/                       # Root for all ESP32/Arduino code (C/C++)
+│   ├── main/                       # The production and current development firmware
+│   │   ├── IEADS_Prototype_Base.ino    # BASE PROTOTYPE (Loading/Display/Connectivity test baseline)
+│   │   ├── IEADS_Final_Integrated.ino  # FINAL Production Code (Full feature set: Button, MQTT, State Machine)
+│   │   └── secrets.h                   # (Local, uncommitted configuration like Wi-Fi credentials)
+│   │
+│   ├── component_tests/            # Individual test sketches for hardware components
+│   │   ├── sketch_ButtonCheck/     # Isolation test for the Panic Button
+│   │   ├── sketch_BuzzerCheck/     # Isolation test for the Buzzer
+│   │   ├── sketch_Display\_V1/      # Display library validation
+│   │   ├── sketch_FirebaseConnectivity/ # MQTT/Cloud connection test
+│   │   ├── sketch_GSM_Module/      # GSM/cellular connectivity test
+│   │   └── ... (All other specific component test sketches)
+│   │
+│   └── libraries/                  # Custom or modified Arduino libraries (if needed)
+│
+├── frontend/                       # Root for the Web Dashboard and Visualization
+│   ├── RealTimeDashboard.html      # (The single-file web dashboard for dispatchers)
+│   └── assets/                     # Frontend resources (CSS, Icons, etc.)
+│
+├── backend/                        # Node.js/Python server-side services
+│   ├── dispatch_engine/            # Service responsible for Proximity-Aware Dispatch
+│   │   └── index.js (or .py)
+│   └── ai_verification_service/    # Service for ML Alert Verification
+│       └── model\_service.py
+│
+└── docs/                           # Project documentation and guides
+    ├── HARDWARE_SETUP.md           # Guide for required Arduino IDE/PlatformIO libraries
+    └── API_SPEC.md                 # Documentation for backend API endpoints
 </pre>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
