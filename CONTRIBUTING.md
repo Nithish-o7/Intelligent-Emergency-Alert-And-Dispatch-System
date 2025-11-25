@@ -10,11 +10,10 @@ All contributions must preserve **reliability**, **security**, and **sub‑secon
 Follow these steps to bring the stack up locally with safe defaults. 🧪💻
 
 ### 🔽 Clone the repository
-
-```bash
-git clone https://github.com/your-org/public-safety-ai-framework.git
-cd public-safety-ai-framework
-```
+  ```
+git clone https://github.com/Nithish-o7/Intelligent-Emergency-Alert-And-Dispatch-System.git
+cd Intelligent-Emergency-Alert-And-Dispatch-System
+  ```
 
 ### 📦 Install dependencies
 
@@ -63,9 +62,9 @@ This project uses a **Fork + Feature Branch + PR** workflow to keep the `main` b
 - Clone your fork and add the upstream remote:
 
 ```bash
-git clone https://github.com/<your-username>/public-safety-ai-framework.git
-cd public-safety-ai-framework
-git remote add upstream https://github.com/your-org/public-safety-ai-framework.git
+git clone https://github.com/Nithish-o7/Intelligent-Emergency-Alert-And-Dispatch-System.git
+cd Intelligent-Emergency-Alert-And-Dispatch-System
+git remote add upstream https://github.com/Nithish-o7/Intelligent-Emergency-Alert-And-Dispatch-System.git
 ```
 
 ### 2️⃣ Create a focused branch
