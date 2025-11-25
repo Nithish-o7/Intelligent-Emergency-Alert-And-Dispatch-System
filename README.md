@@ -189,7 +189,7 @@ If you find IEADS project helpful, give it a star! ⭐ to support more such educ
 
 <h2 id="license">📄 License</h2>
 
-This project is licensed under the MIT License - see the License file for details.
+This project is licensed under the MIT License - see the [`License`](https://github.com/Nithish-o7/Intelligent-Emergency-Alert-And-Dispatch-System/blob/Dev/LICENSE) file for details.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
