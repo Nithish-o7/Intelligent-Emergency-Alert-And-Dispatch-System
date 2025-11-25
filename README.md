@@ -162,7 +162,7 @@ See docs/roadmap.md for detailed info and to suggest improvements!
 │       └── model\_service.py
 │
 ├── docs/                           # Primary folder for documentation
-│   └── **Technical_Design_Document.md** <-- **(Add it here!)**
+│   └── Technical_Design_Document.md
 │   └── Project_Report.md
 │   └── Deployment_Guide.md
 </pre>
