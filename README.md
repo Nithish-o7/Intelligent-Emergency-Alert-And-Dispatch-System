@@ -161,9 +161,10 @@ See docs/roadmap.md for detailed info and to suggest improvements!
 │   └── ai_verification_service/    # Service for ML Alert Verification
 │       └── model\_service.py
 │
-└── docs/                           # Project documentation and guides
-    ├── HARDWARE_SETUP.md           # Guide for required Arduino IDE/PlatformIO libraries
-    └── API_SPEC.md                 # Documentation for backend API endpoints
+├── docs/                           # Primary folder for documentation
+│   └── **Technical_Design_Document.md** <-- **(Add it here!)**
+│   └── Project_Report.md
+│   └── Deployment_Guide.md
 </pre>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
